@@ -1,0 +1,30 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "این یک نمونه API با Swagger است",
+        "title": "نمونه API",
+        "contact": {},
+        "version": "1.0"
+    },
+    "host": "localhost:8080",
+    "basePath": "/api/v1",
+    "paths": {
+        "/hello": {
+            "get": {
+                "description": "این endpoint یک سلام برمی‌گرداند",
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "سلام دنیا",
+                "responses": {
+                    "200": {
+                        "description": "پیام سلام",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
