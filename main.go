@@ -1,41 +1,22 @@
 package main
 
 import (
-	"github.com/gin-gonic/gin"
-	swaggerFiles "github.com/swaggo/files"
-	ginSwagger "github.com/swaggo/gin-swagger"
-
 	_ "go_swagger/docs"
+	"go_swagger/internal/server"
 )
 
-// @title نمونه API
-// @version 1.0
-// @description این یک نمونه API با Swagger است
-// @host localhost:8080
-// @BasePath /api/v1
+//	@title			Swagger Example API
+//	@version		1.0
+//	@description	This is a sample server Petstore server.
+//	@termsOfService	http://swagger.io/terms/
+//	@contact.name	API Support
+//	@contact.url	http://www.swagger.io/support
+//	@contact.email	support@swagger.io
+//	@license.name	Apache 2.0
+//	@license.url	http://www.apache.org/licenses/LICENSE-2.0.html
+//	@host			localhost:8080
+//	@BasePath		/api
 func main() {
-	r := gin.Default()
-
-	// Routes
-	v1 := r.Group("/api/v1")
-	{
-		v1.GET("/hello", helloHandler)
-	}
-
-	// Swagger route
-	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
-
-	r.Run(":8080")
-}
-
-// helloHandler نمونه هندلر
-// @Summary سلام دنیا
-// @Description این endpoint یک سلام برمی‌گرداند
-// @Produce json
-// @Success 200 {string} string "پیام سلام"
-// @Router /hello [get]
-func helloHandler(c *gin.Context) {
-	c.JSON(200, gin.H{
-		"message": "سلام دنیا!",
-	})
+	srv := server.NewServer(":8080")
+	srv.Run()
 }

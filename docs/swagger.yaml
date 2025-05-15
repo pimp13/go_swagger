@@ -1,9 +1,29 @@
-basePath: /api/v1
+basePath: /api
+definitions:
+  server.ErrorResponse:
+    properties:
+      message:
+        type: string
+    type: object
+  server.UserResponse:
+    properties:
+      id:
+        type: string
+      name:
+        type: string
+    type: object
 host: localhost:8080
 info:
-  contact: {}
-  description: این یک نمونه API با Swagger است
-  title: نمونه API
+  contact:
+    email: support@swagger.io
+    name: API Support
+    url: http://www.swagger.io/support
+  description: This is a sample server Petstore server.
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://swagger.io/terms/
+  title: Swagger Example API
   version: "1.0"
 paths:
   /hello:
@@ -17,4 +37,54 @@ paths:
           schema:
             type: string
       summary: سلام دنیا
+  /user:
+    get:
+      description: this is handler for fetch users
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: test message
+          schema:
+            type: string
+      summary: fetch all user
+      tags:
+      - users
+  /user/{id}:
+    get:
+      consumes:
+      - application/json
+      description: get user by id
+      parameters:
+      - description: user id
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: string enums
+        enum:
+        - A
+        - B
+        - C
+        in: query
+        name: enumstring
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/server.UserResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/server.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/server.ErrorResponse'
+      summary: get user by id
+      tags:
+      - users
 swagger: "2.0"
