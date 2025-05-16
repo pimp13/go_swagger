@@ -33,20 +33,20 @@ func (s *Server) Run() {
 
 // helloHandler نمونه هندلر
 //
-//	@Summary		سلام دنیا
-//	@Description	این endpoint یک سلام برمی‌گرداند
+//	@Summary		helloHandler
+//	@Description	test api and sending hello world
 //	@Produce		json
-//	@Success		200	{string}	string	"پیام سلام"
+//	@Success		200	{string}	string	"hello world"
 //	@Router			/hello [get]
 func helloHandler(c *gin.Context) {
 	c.JSON(200, gin.H{
-		"message": "سلام دنیا!",
+		"message": "hello world!",
 	})
 }
 
 // fetchUser handler
 //
-//	@Summary		fetch all user
+//	@Summary		fetchUser
 //	@Description	this is handler for fetch users
 //	@Produce		json
 //	@Tags			users
@@ -60,7 +60,7 @@ func fetchUser(c *gin.Context) {
 
 // getUserByID handle url path with id param
 //
-//	@Summary		get user by id
+//	@Summary		getUserByID
 //	@Description	get user by id
 //	@Tags			users
 //	@Accept			json

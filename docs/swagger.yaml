@@ -1,6 +1,20 @@
 basePath: /api
 definitions:
+  server.AgifyData:
+    properties:
+      age:
+        type: integer
+      count:
+        type: integer
+      name:
+        type: string
+    type: object
   server.ErrorResponse:
+    properties:
+      message:
+        type: string
+    type: object
+  server.HTTPError:
     properties:
       message:
         type: string
@@ -9,6 +23,16 @@ definitions:
     properties:
       id:
         type: string
+      name:
+        type: string
+    type: object
+  server.WeatherData:
+    properties:
+      main:
+        properties:
+          temp:
+            type: number
+        type: object
       name:
         type: string
     type: object
@@ -26,17 +50,50 @@ info:
   title: Swagger Example API
   version: "1.0"
 paths:
-  /hello:
+  /agify/{name}:
     get:
-      description: این endpoint یک سلام برمی‌گرداند
+      consumes:
+      - application/json
+      description: Age prediction based on age
+      parameters:
+      - description: your name
+        in: path
+        name: name
+        required: true
+        type: string
       produces:
       - application/json
       responses:
         "200":
-          description: پیام سلام
+          description: OK
+          schema:
+            $ref: '#/definitions/server.AgifyData'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/server.HTTPError'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/server.HTTPError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/server.HTTPError'
+      summary: getAgify
+      tags:
+      - agify
+  /hello:
+    get:
+      description: test api and sending hello world
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: hello world
           schema:
             type: string
-      summary: سلام دنیا
+      summary: helloHandler
   /user:
     get:
       description: this is handler for fetch users
@@ -47,7 +104,7 @@ paths:
           description: test message
           schema:
             type: string
-      summary: fetch all user
+      summary: fetchUser
       tags:
       - users
   /user/{id}:
@@ -84,7 +141,40 @@ paths:
           description: Not Found
           schema:
             $ref: '#/definitions/server.ErrorResponse'
-      summary: get user by id
+      summary: getUserByID
       tags:
       - users
+  /weather/{city}:
+    get:
+      consumes:
+      - application/json
+      description: Get the weather for a city
+      parameters:
+      - description: city name
+        in: path
+        name: city
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/server.WeatherData'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/server.HTTPError'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/server.HTTPError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/server.HTTPError'
+      summary: getWeatherByCity
+      tags:
+      - weather
 swagger: "2.0"

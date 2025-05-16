@@ -24,16 +24,66 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
-        "/hello": {
+        "/agify/{name}": {
             "get": {
-                "description": "این endpoint یک سلام برمی‌گرداند",
+                "description": "Age prediction based on age",
+                "consumes": [
+                    "application/json"
+                ],
                 "produces": [
                     "application/json"
                 ],
-                "summary": "سلام دنیا",
+                "tags": [
+                    "agify"
+                ],
+                "summary": "getAgify",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "your name",
+                        "name": "name",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
                 "responses": {
                     "200": {
-                        "description": "پیام سلام",
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/server.AgifyData"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/server.HTTPError"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/server.HTTPError"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/server.HTTPError"
+                        }
+                    }
+                }
+            }
+        },
+        "/hello": {
+            "get": {
+                "description": "test api and sending hello world",
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "helloHandler",
+                "responses": {
+                    "200": {
+                        "description": "hello world",
                         "schema": {
                             "type": "string"
                         }
@@ -50,7 +100,7 @@ const docTemplate = `{
                 "tags": [
                     "users"
                 ],
-                "summary": "fetch all user",
+                "summary": "fetchUser",
                 "responses": {
                     "200": {
                         "description": "test message",
@@ -73,7 +123,7 @@ const docTemplate = `{
                 "tags": [
                     "users"
                 ],
-                "summary": "get user by id",
+                "summary": "getUserByID",
                 "parameters": [
                     {
                         "type": "integer",
@@ -115,10 +165,82 @@ const docTemplate = `{
                     }
                 }
             }
+        },
+        "/weather/{city}": {
+            "get": {
+                "description": "Get the weather for a city",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "weather"
+                ],
+                "summary": "getWeatherByCity",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "city name",
+                        "name": "city",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/server.WeatherData"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/server.HTTPError"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/server.HTTPError"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/server.HTTPError"
+                        }
+                    }
+                }
+            }
         }
     },
     "definitions": {
+        "server.AgifyData": {
+            "type": "object",
+            "properties": {
+                "age": {
+                    "type": "integer"
+                },
+                "count": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                }
+            }
+        },
         "server.ErrorResponse": {
+            "type": "object",
+            "properties": {
+                "message": {
+                    "type": "string"
+                }
+            }
+        },
+        "server.HTTPError": {
             "type": "object",
             "properties": {
                 "message": {
@@ -131,6 +253,22 @@ const docTemplate = `{
             "properties": {
                 "id": {
                     "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                }
+            }
+        },
+        "server.WeatherData": {
+            "type": "object",
+            "properties": {
+                "main": {
+                    "type": "object",
+                    "properties": {
+                        "temp": {
+                            "type": "number"
+                        }
+                    }
                 },
                 "name": {
                     "type": "string"
