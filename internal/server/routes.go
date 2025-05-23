@@ -13,5 +13,8 @@ func (s *Server) RegisterRoutes(route *gin.Engine) {
 		v1.GET("/weather/:city", getWeatherByCity)
 
 		v1.GET("/agify/:name", getAgify)
+
+		v1.GET("/csrf-token", setCsrfToken)
+		v1.POST("/csrf-token", getCsrfToken)
 	}
 }

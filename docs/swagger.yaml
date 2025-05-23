@@ -36,7 +36,7 @@ definitions:
       name:
         type: string
     type: object
-host: localhost:8080
+host: localhost:9090
 info:
   contact:
     email: support@swagger.io
@@ -83,6 +83,35 @@ paths:
       summary: getAgify
       tags:
       - agify
+  /csrf-token:
+    get:
+      consumes:
+      - application/json
+      description: setCsrfToken
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: setCsrfToken
+      tags:
+      - csrf
+    post:
+      consumes:
+      - application/json
+      description: getCsrfToken
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: getCsrfToken
+      tags:
+      - csrf
   /hello:
     get:
       description: test api and sending hello world
@@ -177,4 +206,6 @@ paths:
       summary: getWeatherByCity
       tags:
       - weather
+schemes:
+- http
 swagger: "2.0"

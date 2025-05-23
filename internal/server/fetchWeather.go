@@ -22,17 +22,21 @@ type HTTPError struct {
 func fetchWeather(city string) (*WeatherData, error) {
 	const apiKey = "ecfd8aa66dac451426df9b4f6a8ef94e"
 
-	url := fmt.Sprintf("https://api.openweathermap.org/data/2.5/weather?q=%s&appid=%s", city, apiKey)
+	url := fmt.Sprintf(
+		"https://api.openweathermap.org/data/2.5/weather?q=%s&appid=%s",
+		city,
+		apiKey,
+	)
 
 	resp, err := http.Get(url)
 	if err != nil {
-		return nil, fmt.Errorf("fetch weather data failed: %w\n", err)
+		return nil, fmt.Errorf("fetch weather data failed: %w", err)
 	}
 	defer resp.Body.Close()
 
 	var weatherData WeatherData
 	if err := json.NewDecoder(resp.Body).Decode(&weatherData); err != nil {
-		return nil, fmt.Errorf("decoding json data for %s failed: %w\n", city, err)
+		return nil, fmt.Errorf("decoding json data for %s failed: %w", city, err)
 	}
 
 	return &weatherData, nil
