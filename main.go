@@ -18,6 +18,6 @@ import (
 // @BasePath		/api
 // @schemes		http
 func main() {
-	srv := server.NewServer(":9090")
+	srv := server.NewServer(":8082")
 	srv.Run()
 }

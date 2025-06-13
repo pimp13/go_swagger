@@ -1,8 +1,19 @@
 package server
 
-import "github.com/gin-gonic/gin"
+import (
+	"go_swagger/internal/posts"
+	"go_swagger/internal/users"
+
+	"github.com/gin-gonic/gin"
+)
 
 func (s *Server) RegisterRoutes(route *gin.Engine) {
+
+	pm := posts.NewPostsModule()
+
+	um := users.NewUserModule(pm)
+	um.RegisterRoutes(route)
+
 	// Routes for API v1
 	v1 := route.Group("/api")
 	{
